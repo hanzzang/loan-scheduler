@@ -62,14 +62,16 @@ public class LoanScheduleController {
 
     @RequestMapping(value="/loans/add", method=RequestMethod.POST)
     public String addLoan(@ModelAttribute Loan loan, RedirectAttributes redirectAttributes) throws Exception {
-        LoanType loanType = loan.getLoanType();
+        LoanType loanType = null;
         List <Schedule> scheduleList = null;
         Loan savedLoan = new Loan();
 
-        if("P".equals(loanType.toString())){
+        loanType = loan.getLoanType();
+
+        if(loanType != null && "P".equals(loanType.toString())){
             savedLoan = loanService.save(loan);
             scheduleList = calculateService.calculateLoanP(savedLoan);
-        }else if("PI".equals(loanType.toString())){
+        }else if(loanType != null && "PI".equals(loanType.toString())){
             savedLoan = loanService.save(loan);
             scheduleList = calculateService.calculateLoanPI(savedLoan);
         }else{
