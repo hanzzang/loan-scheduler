@@ -16,7 +16,7 @@
 
 ## 데이터베이스 설계
 
-![](../header.png)
+![erd](./images/erd.jpg)
 
 ## DDL
 
@@ -62,3 +62,7 @@ references loan (id);
 |대출스케줄 생성(계산)|/loans/add|POST|
 |대출스케줄 수정 화면|/loans/edit/{loanId}|GET|
 |대출스케줄 수정|/loans/edit/{loanId}|PUT|
+
+
+## 클래스 의존관계
+![loan_uml](./images/loan_uml.jpg)
