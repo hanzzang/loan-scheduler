@@ -65,4 +65,4 @@ references loan (id);
 
 
 ## 클래스 의존관계
-![loan_uml](./images/loan_uml.jpg)
+![loan_uml](./images/loan_uml.jpeg)
