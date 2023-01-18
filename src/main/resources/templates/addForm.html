@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        .container {
+            max-width: 1200px;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript" th:src="@{/js/common.js}"></script>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>대출상환스케줄 생성</h2>
+    </div>
+
+    <form th:object="${loan}" action="loan.html" th:action method="post" onsubmit="return check();">
+        <div>
+            <div th:each="type : ${loanTypes}" class="col form-check form-check-inline">
+                <input type="radio" th:field="*{loanType}" th:value="${type.name()}" class="form-check-input">
+                <label th:for="${#ids.prev('loanType')}" th:text="${type.description}" class="form-check-label">
+                    상환방법
+                </label>
+            </div>
+        </div>
+        <div>
+            <label for="loanAmount">대출원금</label>
+            <input type="number" id="loanAmount" name="loanAmount" class="form-control" placeholder="1000000" min='1' max='100000000000'>
+        </div>
+        <div>
+            <label for="interestRate">대출이율</label>
+            <input type="number" id="interestRate" name="interestRate" class="form-control" placeholder="3.5" min='0' max='100' step='0.01'>
+        </div>
+        <div>
+            <label for="loanTerm">상환개월</label>
+            <input type="number" id="loanTerm" name="loanTerm" class="form-control" placeholder="36" min='1' max='360'>
+        </div>
+        <div>
+            <label for="loanDate">대출시작일</label>
+            <input type="date" id="loanDate" name="loanDate" value="2023-01-17" min="1900-01-01" max="2099-12-31">
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">생성</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='loans.html'"
+                        th:onclick="|location.href='@{/loans}'|"
+                        type="button">취소</button>
+            </div>
+        </div>
+
+    </form>
+
+</div> <!-- /container -->
+</body>
+</html>

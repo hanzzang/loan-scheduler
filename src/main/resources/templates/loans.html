@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container" style="max-width: 1200px">
+    <div class="py-5 text-center">
+        <h2>대출상환스케줄 목록</h2>
+    </div>
+
+    <form th:object="${loanSearch}" method="get" class="form-inline">
+    <div class="row">
+        <div th:each="type : ${loanTypes}" class="col form-check form-check-inline">
+            <input type="radio" th:field="*{loanType}" th:value="${type.name()}" class="form-check-input">
+            <label th:for="${#ids.prev('loanType')}" th:text="${type.description}" class="form-check-label">
+                상환방법
+            </label>
+        </div>
+        <div class="col">
+            <input type="text" th:field="*{maxAmount}" class="form-control" placeholder="최대대출금"/>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-secondary mb-2">검색</button>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+            <div class="col">
+                <button class="btn btn-primary float-end"
+                        onclick="location.href='addForm.html'"
+                        th:onclick="|location.href='@{/loans/add}'|"
+                        type="button">상환스케줄 생성
+                </button>
+            </div>
+        </div>
+    </div>
+
+    </form>
+
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>상환방법</th>
+                <th>대출원금</th>
+                <th>대출이율</th>
+                <th>상환개월</th>
+                <th>대출시작일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="loan : ${loans}">
+                <td><a href="loan.html" th:href="@{/loans/{loanId}(loanId=${loan.id})}" th:text="${loan.id}">대출번호</a>
+                </td>
+                <td><a href="loan.html" th:href="@{|/loans/${loan.id}|}" th:text="${loan.loanType.description}">상환방법</a></td>
+                <td th:text="${#numbers.formatInteger(loan.loanAmount,0,'COMMA')}">대출원금</td>
+                <td th:text="${loan.interestRate}">대출이율</td>
+                <td th:text="${loan.loanTerm}">상환개월</td>
+                <td th:text="${loan.loanDate}">대출시작일</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div> <!-- /container -->
+
+</body>
+</html>
